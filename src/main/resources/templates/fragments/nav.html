@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+</head>
+<body>
+
+	<nav class="navbar navbar-expand-lg navbar-dark bg-secondary" th:fragment="nav">
+		<a class="navbar-brand" th:href='@{/}'>EVE Tools</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+			aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav mr-auto">
+				<li sec:authorize="hasRole('ROLE_EVE_CORP_CONTRACTS')"
+						class="nav-item" th:classappend="${active} == 'contracts' ? 'active'">
+					<a class="nav-link" th:href="@{/corp-courier-contracts}">Contracts</a>
+				</li>
+				<li sec:authorize="hasRole('ROLE_EVE_MOON_EXTRACTION')"
+						class="nav-item" th:classappend="${active} == 'moons' ? 'active'">
+					<a class="nav-link" th:href="@{/moon-extraction}">Moons</a>
+				</li>
+				<li sec:authorize="hasRole('ROLE_EVE_ASSETS')"
+						class="nav-item" th:classappend="${active} == 'assets' ? 'active'">
+					<a class="nav-link" th:href="@{/assets}">Assets</a>
+				</li>
+				<li sec:authorize="hasRole('ROLE_EVE_PI')"
+						class="nav-item" th:classappend="${active} == 'pi' ? 'active'">
+					<a class="nav-link" th:href="@{/pi}">PI</a>
+				</li>
+			</ul>
+
+			<div sec:authorize="hasRole('ROLE_EVE')" th:remove="tag">
+				<span class="name-popover" title="Permission scopes" data-toggle="popover" data-placement="bottom">
+					<span class="navbar-text" th:if="${session.eveEnv} == 'tranq'">[Tranquility]</span>
+					&nbsp;
+					<span class="navbar-text" th:if="${session.eveEnv} == 'sisi'">[Singularity]</span>
+					<span class="navbar-text" th:text="${#authentication.principal.characterName}"></span>
+				</span>
+				<div id="eve_navbar_popover">
+					<div class="navbar-popover-nowrap" th:each="scope: ${#authentication.principal.scopes}"
+						th:text="${scope}"></div>
+				</div>
+				&nbsp; &nbsp;
+
+				<form class="form-inline my-2 my-lg-0" method="post" th:action="@{/logout}">
+					<input class="btn btn-outline-success my-2 my-sm-0" type="submit" value="Sign Out" />
+				</form>
+			</div>
+			<div sec:authorize="! hasRole('ROLE_EVE')" th:remove="tag">
+				<div th:if="${sisiEnabled}" th:remove="tag">
+					Login: <span class="eve-env" th:classappend="${session.eveEnv} == 'tranq' ? 'active'"> <a class="nav-link"
+						th:href="@{/?env=tranq}">Tranquility</a>
+					</span> <span class="eve-env" th:classappend="${session.eveEnv} == 'sisi' ? 'active'"> <a class="nav-link"
+						th:href="@{/?env=sisi}">Singularity</a>
+					</span>
+				</div>
+			</div>
+
+		</div>
+	</nav>
+
+</body>
+</html>

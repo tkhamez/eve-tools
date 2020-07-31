@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head th:replace="fragments/head :: head"></head>
+<body class="assets container-fluid">
+
+	<nav th:replace="fragments/nav :: nav(active='assets')"></nav>
+
+	<div class="row">
+		<div class="col">
+			<h1>Assets</h1>
+
+			<div class="alert alert-warning" th:if="${apiError}">
+				<span th:text="${apiError}"></span>
+			</div>
+
+			<a href="#" onclick="Assets.toggleAll(event, '.assets-table')">+/- all</a>
+		</div>
+	</div>
+
+	<div th:each="assets : ${assetsLocation}" class="row">
+		<div class="col">
+
+			<h6 class="toggle-table" th:onclick="'Assets.toggleContainer(\'' + ${assets.locationId} + '\')'">
+				<span> +/- </span>
+				<span th:if="${assets.locationName}">
+					<span th:text="${assets.locationName}"></span>
+				</span>
+				<span th:if="! ${assets.locationName}">
+					Location ID: <span th:text="${assets.locationId}"></span>
+				</span>
+			</h6>
+
+			<table class="table table-hover table-bordered table-sm assets-table"
+				th:classappend="'location-' + ${assets.locationId} +
+					(! ${assets.locationName} ? ' assets-location-unknown' : '')">
+				<thead>
+					<tr th:fragment="head">
+						<th>
+							<a href="#" th:onclick="'Assets.toggleAll(event,
+								\'.parent-location-' + ${assets.locationId} + '\')'">+/-</a>
+							item name
+						</th>
+						<th>location</th>
+						<th>location type</th>
+						<th>singleton</th>
+						<th>type</th>
+						<th>quantity</th>
+					</tr>
+				</thead>
+				<tbody>
+
+					<th:block th:each="aL1 : ${assets.children}" th:remove="tag">
+						<tr th:replace="fragments/asset-item :: item(${aL1}, 1, ${assets.locationId})"></tr>
+
+						<th:block th:each="aL2 : ${aL1.children}">
+							<tr th:replace="fragments/asset-item :: item(${aL2}, 2, ${aL1.locationId})"></tr>
+
+							<th:block th:each="aL3 : ${aL2.children}">
+								<tr th:replace="fragments/asset-item :: item(${aL3}, 3, ${aL2.locationId})"></tr>
+							</th:block>
+
+						</th:block>
+
+					</th:block>
+
+				</tbody>
+			</table>
+
+		</div>
+	</div>
+
+</body>
+</html>

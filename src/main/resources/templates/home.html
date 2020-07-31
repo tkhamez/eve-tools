@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head th:replace="fragments/head :: head"></head>
+<body class="home container-fluid">
+
+	<nav th:replace="fragments/nav :: nav(sisiEnabled=${sisiEnabled})"></nav>
+
+	<div class="row">
+
+		<div class="col">
+			<div class="card">
+				<div class="card-header">
+					<h3 class="card-title">Corporation Courier Contracts</h3>
+				</div>
+				<div class="card-body">
+					<p>
+						Courier contracts available to the corporation.
+					</p>
+					<div sec:authorize="hasRole('ROLE_EVE_CORP_CONTRACTS')">
+						<a th:href="@{/corp-courier-contracts}" class="btn btn-primary">Go</a>
+					</div>
+					<div sec:authorize="!hasRole('ROLE_EVE_CORP_CONTRACTS')">
+						<a th:href="${corpContractsUrl}">
+							<img src="/assets/EVE_SSO_Login_Buttons_Large_Black.png" alt="eve soo login"/>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="col">
+			<div class="card">
+				<div class="card-header">
+					<h3 class="card-title">Moon Extractions</h3>
+				</div>
+				<div class="card-body">
+					<p>
+						Extraction timers for all moons from the corporation.
+					</p>
+					<div sec:authorize="hasRole('ROLE_EVE_MOON_EXTRACTION')">
+						<a th:href="@{/moon-extraction}" class="btn btn-primary">Go</a>
+					</div>
+					<div sec:authorize="!hasRole('ROLE_EVE_MOON_EXTRACTION')">
+						<a th:href="${moonExtractionsUrl}">
+							<img src="/assets/EVE_SSO_Login_Buttons_Large_Black.png" alt="eve soo login"/>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="col">
+			<div class="card">
+				<div class="card-header">
+					<h3 class="card-title">Assets</h3>
+				</div>
+				<div class="card-body">
+					<p>
+						Character assets.
+					</p>
+					<div sec:authorize="hasRole('ROLE_EVE_ASSETS')">
+						<a th:href="@{/assets}" class="btn btn-primary">Go</a>
+					</div>
+					<div sec:authorize="!hasRole('ROLE_EVE_ASSETS')">
+						<a th:href="${assetsUrl}">
+							<img src="/assets/EVE_SSO_Login_Buttons_Large_Black.png" alt="eve soo login"/>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="col">
+			<div class="card">
+				<div class="card-header">
+					<h3 class="card-title">Planetary Interaction</h3>
+				</div>
+				<div class="card-body">
+					<p>
+						Planetary colonies owned by the character.
+					</p>
+					<div sec:authorize="hasRole('ROLE_EVE_PI')">
+						<a th:href="@{/pi}" class="btn btn-primary">Go</a>
+					</div>
+					<div sec:authorize="!hasRole('ROLE_EVE_PI')">
+						<a th:href="${piUrl}">
+							<img src="/assets/EVE_SSO_Login_Buttons_Large_Black.png" alt="eve soo login"/>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="col" sec:authorize="
+				! hasRole('ROLE_EVE_CORP_CONTRACTS') or
+				! hasRole('ROLE_EVE_MOON_EXTRACTION') or
+				! hasRole('ROLE_EVE_ASSETS') or
+				! hasRole('ROLE_EVE_PI')">
+			<div class="card">
+				<div class="card-header">
+					<h3 class="card-title">All</h3>
+				</div>
+				<div class="card-body">
+					<p>
+						Login for all parts of this application.
+					</p>
+					<a th:href="${allUrl}">
+						<img src="/assets/EVE_SSO_Login_Buttons_Large_Black.png" alt="eve soo login"/>
+					</a>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+</body>
+</html>

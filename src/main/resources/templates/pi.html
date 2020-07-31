@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head th:replace="fragments/head :: head"></head>
+<body class="assets container-fluid">
+
+	<nav th:replace="fragments/nav :: nav(active='pi')"></nav>
+
+	<div class="row">
+		<div class="col">
+			<h1>Planetary Interaction</h1>
+
+			<div class="alert alert-warning" th:if="${apiError}">
+				<span th:text="${apiError}"></span>
+			</div>
+		</div>
+	</div>
+
+	<div th:each="planet : ${planets}" class="row">
+		<div class="col">
+			<b th:text="${planetNames.get(planet.planet_id)}"></b><br>
+			upgrade level: <span th:text="${planet.upgrade_level}"></span><br>
+			last update: <span th:text="${#calendars.format(planet.last_update, 'dd. MMM. yyyy HH:mm z')}"></span><br>
+			type: <span th:text="${planet.planet_type}"></span><br>
+			num pins: <span th:text="${planet.num_pins}"></span><br>
+
+			<table th:if="${colonies.get(planet.planet_id)}" class="table table-hover table-bordered table-sm">
+				<tr>
+					<th>type</th>
+					<th>is_running</th>
+					<th>last_cycle_start</th>
+					<th>schematic_id</th>
+					<th>longitude</th>
+					<th>latitude</th>
+				</tr>
+				<tr th:each="pin : ${colonies.get(planet.planet_id).pins}">
+					<td th:text="${types.get(pin.type_id)}"></td>
+					<td th:text="${pin.is_running}"></td>
+					<td th:text="${pin.last_cycle_start} ?
+						${#calendars.format(pin.last_cycle_start, 'dd. MMM. yyyy HH:mm')}"></td>
+					<td th:text="${pin.schematic_id}"></td>
+					<td th:text="${pin.longitude}"></td>
+					<td th:text="${pin.latitude}"></td>
+				</tr>
+			</table>
+			<br>
+		</div>
+	</div>
+
+</body>
+</html>

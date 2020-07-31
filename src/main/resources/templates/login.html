@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head th:replace="fragments/head :: head"></head>
+<body class="login container-fluid">
+
+	<nav th:replace="fragments/nav :: nav"></nav>
+
+	<div class="row">
+
+		<div class="col">
+			Not authorized.<br>
+			<br>
+			<a th:href="@{/}">Login here</a>
+		</div>
+
+	</div>
+
+</body>
+</html>

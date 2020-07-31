@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head th:replace="fragments/head :: head"></head>
+<body class="moon-extraction container-fluid">
+
+	<nav th:replace="fragments/nav :: nav(active='moons')"></nav>
+
+	<div class="row">
+		<div class="col">
+			<h1>Moon Extractions</h1>
+
+			<div class="alert alert-warning" th:if="${apiError}">
+				<span th:text="${apiError}"></span>
+			</div>
+		</div>
+	</div>
+
+	<table class="table table-hover table-bordered table-sm">
+		<thead>
+			<tr>
+				<th>structure</th>
+				<th>moon</th>
+				<th>extraction start</th>
+				<th>chunk arrival</th>
+				<th>natural decay</th>
+			</tr>
+		</thead>
+		<tr th:each="e: ${extractions}">
+			<td th:text="${loc.get(e.structure_id)}"></td>
+			<td th:text="${moons.get(e.moon_id)}"></td>
+			<td th:text="${e.extraction_start_time} ?
+				${#calendars.format(e.extraction_start_time.time, 'dd. MMM. yyyy HH:mm')}"></td>
+			<td th:text="${e.chunk_arrival_time.time} ?
+				${#calendars.format(e.chunk_arrival_time.time.time, 'dd. MMM. yyyy HH:mm')}"></td>
+			<td th:text="${e.natural_decay_time} ?
+				${#calendars.format(e.natural_decay_time.time, 'dd. MMM. yyyy HH:mm')}"></td>
+		</tr>
+	</table>
+
+</body>
+</html>

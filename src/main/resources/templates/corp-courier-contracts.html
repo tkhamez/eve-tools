@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head th:replace="fragments/head :: head"></head>
+<body class="corp-courier-contracts container-fluid">
+
+	<nav th:replace="fragments/nav :: nav(active='contracts')"></nav>
+
+	<div class="row">
+		<div class="col">
+			<h1>Corporation Courier Contracts</h1>
+
+			<div class="alert alert-warning" th:if="${apiError}">
+				<span th:text="${apiError}"></span>
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col">
+
+			<div th:each="contracts,iterStat: ${contractGroup}" class="contracts">
+
+				<h3 th:if="${iterStat.index} == 0">Outstanding</h3>
+
+				<h3 th:if="${iterStat.index} == 1">
+					<br>
+					In progress and last two days
+					<a href="?" style="font-size: 0.9375rem">hide</a>
+				</h3>
+
+				<table class="table table-hover table-bordered table-sm"
+                        th:classappend="(${iterStat.index} == 0 ? ' outstanding' : ' other')">
+					<thead>
+						<tr>
+							<th>start location</th>
+							<th>end location</th>
+							<th th:if="${iterStat.index} == 1">status</th>
+							<th>volume</th>
+							<th>collateral</th>
+							<th>reward</th>
+							<th>calculated reward *</th>
+							<th title="days to complete">days</th>
+							<th>issuer</th>
+							<th>issuer corporation</th>
+							<th th:if="${iterStat.index} == 1">acceptor</th>
+							<th>date issued</th>
+							<th>date expired</th>
+							<th th:if="${iterStat.index} == 1">date accepted</th>
+							<th th:if="${iterStat.index} == 1">date completed</th>
+							<th>title</th>
+						</tr>
+                        <tr class="sum">
+                            <td>sum selected:</td>
+                            <td></td>
+                            <td th:if="${iterStat.index} == 1"></td>
+                            <td class="number volume"></td>
+                            <td class="number collateral"></td>
+                            <td class="number reward"></td>
+                            <td class="number calc-reward"></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td th:if="${iterStat.index} == 1"></td>
+                            <td></td>
+                            <td></td>
+                            <td th:if="${iterStat.index} == 1"></td>
+                            <td th:if="${iterStat.index} == 1"></td>
+                            <td></td>
+                        </tr>
+                    </thead>
+					<tbody>
+						<tr th:each="c: ${contracts}" onclick="CorpCourierContracts.select(this)">
+							<td class="start" th:text="${loc.get(c.start_location_id)}"></td>
+							<td class="end" th:text="${loc.get(c.end_location_id)}"></td>
+							<td th:if="${iterStat.index} == 1" th:text="${c.status}"></td>
+							<td class="number volume" th:attr="data-value=${c.volume}"
+								th:text="${c.volume} ? ${#numbers.formatDecimal(c.volume, 1, 'COMMA', 2, 'POINT')}"></td>
+							<td class="number collateral" th:attr="data-value=${c.collateral}"
+								th:text="${c.collateral} ? ${#numbers.formatInteger(c.collateral, 1, 'COMMA')}"></td>
+							<td class="number reward" th:attr="data-value=${c.reward}"
+                                th:text="${c.reward} ? ${#numbers.formatInteger(c.reward, 1, 'COMMA')}"></td>
+							<td class="number calc-reward"></td>
+							<td class="number" th:text="${c.days_to_complete}"></td>
+							<td th:text="${chars.get(c.issuer_id)}"></td>
+							<td th:text="${corps.get(c.issuer_corporation_id)}"></td>
+							<td th:if="${iterStat.index} == 1" th:text="${chars.get(c.acceptor_id)}"></td>
+							<td th:text="${c.date_issued} ?
+								${#calendars.format(c.date_issued, 'dd. MMM. yyyy HH:mm')}"></td>
+							<td th:text="${c.date_expired} ?
+								${#calendars.format(c.date_expired, 'dd. MMM. yyyy HH:mm')}"></td>
+							<td th:if="${iterStat.index} == 1" th:text="${c.date_accepted} ?
+								${#calendars.format(c.date_accepted, 'dd. MMM. yyyy HH:mm')}"></td>
+							<td th:if="${iterStat.index} == 1">
+								<span th:if="${c.status} != in_progress" th:text="${c.date_completed} ?
+									${#calendars.format(c.date_completed, 'dd. MMM. yyyy HH:mm')}"></span>
+							</td>
+							<td th:text="${c.title}"></td>
+						</tr>
+					</tbody>
+				</table>
+
+				<p>
+					* more or less
+					<a href="http://freight.bravecollective.com/calculator" target="_blank">BRAVE Freight</a>
+					(hub) prices
+				</p>
+
+				<div th:if="! ${showBoth}" class="col">
+					<br /> <a href="?more=1">show in progress and last two days</a>
+				</div>
+			</div>
+			<br />
+
+		</div>
+	</div>
+
+</body>
+</html>

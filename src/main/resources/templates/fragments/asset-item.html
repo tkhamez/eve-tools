@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head></head>
+<body>
+
+<table>
+
+	<tr th:fragment="item(asset, level, parentLocationId)"
+		th:classappend="
+			'level-' + ${level} +
+			(${asset.children.size()} > 0 ? ' container' : '') +
+			(${level} > 1 ? ' location-' + ${asset.locationId} : '') +
+			(${level} > 1 ? ' parent-location-' + ${parentLocationId} : '')"
+		th:onclick="'Assets.toggleContainer(\'' + ${asset.itemId} + '\')'">
+
+		<td>
+			<span th:if="${level} > 1">&nbsp; &nbsp; &nbsp; &nbsp;</span>
+			<span th:if="${asset.children.size()} > 0"> +/- </span>
+			<span th:if="${level} > 2">&nbsp; &nbsp; &nbsp; &nbsp;</span>
+			<span th:if="${asset.itemName} != 'None'" th:text="${asset.itemName}"></span>
+		</td>
+		<td th:text="${asset.locationFlag}"></td>
+		<td th:text="${asset.locationType}"></td>
+		<td th:text="${asset.isSingleton}"></td>
+		<td th:text="${asset.typeName}"></td>
+		<td th:text="${asset.quantity}"></td>
+	</tr>
+
+</table>
+</body>
+</html>
