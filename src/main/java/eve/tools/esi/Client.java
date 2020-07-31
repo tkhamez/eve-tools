@@ -66,7 +66,7 @@ public class Client {
 	}
 
 	private <T> T request(Class<T> type, String url, HttpMethod method, HttpHeaders headers, Object body) {
-		headers.set("User-Agent", "Spring Boot 0.0.1-SNAPSHOT");
+		headers.set("User-Agent", "EVE Tools/0.1.0-SNAPSHOT (https://github.com/tkhamez/eve-tools)");
 
 		HttpEntity<Object> requestEntity = null;
 		if (body != null) {
