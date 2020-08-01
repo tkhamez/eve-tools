@@ -43,7 +43,7 @@ EVE_TOOLS_SISI_SECRET_KEY = cd34
 $ ./gradlew bootRun
 ```
 
-Browser to http://localhost:8080
+Browse to http://localhost:8080
 
 Rebuild continuously, in a 2nd console:  
 ```
