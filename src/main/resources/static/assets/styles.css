@@ -2,55 +2,46 @@
 .navbar {
 	margin-bottom: 15px;
 }
-
 .navbar #eve_navbar_popover {
 	display: none;
 }
-
 .navbar .name-popover {
 	cursor: pointer;
 }
-
 .navbar-popover-nowrap {
 	white-space: nowrap;
 }
-
 .navbar.navbar-dark .navbar-nav .active > .nav-link {
 	color: #00bc8c; /* it's #fff like inactive originally */
 }
 
-
+.footer .github {
+    float: right;
+}
 
 .home .card {
 	margin-bottom: 15px;
 }
-
 .home .navbar .eve-env.active a,
 .home .navbar .eve-env.active a:hover {
 	font-weight: bold;
 }
 
-
-
 .corp-courier-contracts .table {
 	font-size: 0.75rem;
 }
-
 .corp-courier-contracts .dataTables_filter {
 	display: none;
 }
-
 .corp-courier-contracts .table .number {
 	text-align: right;
 }
-
 .corp-courier-contracts table.dataTable.fixedHeader-floating,
 .corp-courier-contracts table.dataTable.fixedHeader-locked,
 .moon-extraction table.dataTable.fixedHeader-floating,
 .moon-extraction table.dataTable.fixedHeader-locked {
 	background-color: inherit;
 }
-
 .corp-courier-contracts .selected {
     background-color: #333;
 }
@@ -58,37 +49,28 @@
     background-color: #303030;
 }
 
-
 .moon-extraction {
 }
-
-
 
 .assets .level-2 {
 	background-color: #292929;
 }
-
 .assets .level-2:hover {
 	background-color: #272727;
 }
-
 .assets .level-3 {
 	background-color: #333;
 }
-
 .assets .level-3:hover {
 	background-color: #313131;
 }
-
 .assets .toggle-table:hover {
 	color: #ccc;
 }
-
 .assets .toggle-table,
 .assets .container {
 	cursor: pointer;
 }
-
 .assets .assets-location-unknown,
 .assets .level-2,
 .assets .level-3 {
