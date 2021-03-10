@@ -40,14 +40,24 @@ EVE_TOOLS_SISI_SECRET_KEY = cd34
 ## Run
 
 ```
-$ ./gradlew bootRun
+./gradlew bootRun
 ```
 
 Browse to http://localhost:8080
 
 Rebuild continuously, in a 2nd console:  
 ```
-$ ./gradlew build --continuous
+./gradlew build --continuous
+```
+
+### Docker
+
+```shell
+docker-compose up
+docker-compose run --service-ports eve-tools-java /bin/bash
+
+# second console (find name with "docker ps")
+docker exec -it eve-tools_eve-tools-java_run_412ebc385665 /bin/bash
 ```
 
 ## Copyright Notice

@@ -1,0 +1,7 @@
+version: '3.1'
+services:
+  eve-tools-java:
+    image: openjdk:8-jdk-buster
+    volumes: [ "./:/opt/eve-tools", "./.gradle:/root/.gradle" ]
+    ports: [ "8080:8080" ]
+    working_dir: /opt/eve-tools
