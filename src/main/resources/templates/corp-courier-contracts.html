@@ -39,7 +39,8 @@
 							<th>volume</th>
 							<th>collateral</th>
 							<th>reward</th>
-							<th>calculated reward *</th>
+							<th class="no-sort">calculated reward *</th>
+							<th th:if="${iterStat.index} == 0">reward/m<sup>3</sup></th>
 							<th title="days to complete">days</th>
 							<th>issuer</th>
 							<th>issuer corporation</th>
@@ -58,6 +59,7 @@
                             <td class="number collateral"></td>
                             <td class="number reward"></td>
                             <td class="number calc-reward"></td>
+							<th th:if="${iterStat.index} == 0" class="number"></th>
                             <td></td>
                             <td></td>
                             <td></td>
@@ -81,6 +83,7 @@
 							<td class="number reward" th:attr="data-value=${c.reward}"
                                 th:text="${c.reward} ? ${#numbers.formatInteger(c.reward, 1, 'COMMA')}"></td>
 							<td class="number calc-reward"></td>
+							<td th:if="${iterStat.index} == 0" class="number reward-m3"></td>
 							<td class="number" th:text="${c.days_to_complete}"></td>
 							<td th:text="${chars.get(c.issuer_id)}"></td>
 							<td th:text="${corps.get(c.issuer_corporation_id)}"></td>
