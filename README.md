@@ -47,7 +47,7 @@ Browse to http://localhost:8080
 
 Rebuild continuously, in a 2nd console:  
 ```
-./gradlew build --continuous
+./gradlew build --continuous -xtest
 ```
 
 ### Docker

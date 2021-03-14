@@ -25,13 +25,11 @@ public class ApiTests {
 	public void universeNames() {
 		List<Long> ids = new ArrayList<>();
 		ids.add((long) 96061222); // character
-		ids.add((long) 98522659); // corporation
 
 		List<UniverseName> actual = api.universeNames(ids);
 
 		List<UniverseName> expected = new ArrayList<>();
 		expected.add(new UniverseName((long) 96061222, "Tian Khamez", "character"));
-		expected.add(new UniverseName((long) 98522659, "Incredible.", "corporation"));
 
 		assertEquals(expected, actual);
 	}
