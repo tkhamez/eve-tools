@@ -72,25 +72,8 @@ public class Api {
 	 */
 	public List<Asset> characterAssets(Long characterId) {
 		String path = "/v5/characters/" + characterId +  "/assets/";
-		Asset[] data = getAuthenticated(path, Asset[].class);
 
-		if (data == null) {
-			return null;
-		}
-
-		List<Asset> dataList = new ArrayList<>(Arrays.asList(data));
-
-		int currentPage = 1;
-		Integer pages = client.getPages();
-		while (currentPage < pages) {
-			currentPage ++;
-			Asset[] data2 = getAuthenticated(path + "?page=" + currentPage, Asset[].class);
-			if (data2 != null) {
-				dataList.addAll(Arrays.asList(data2));
-			}
-		}
-
-		return dataList;
+		return getAuthenticatedPaged(path, Asset[].class);
 	}
 
 	/**
@@ -138,9 +121,8 @@ public class Api {
 	 */
 	public List<Contract> corporationContracts(Long corporationId) {
 		String path = "/v1/corporations/" + corporationId + "/contracts/";
-		Contract[] data = getAuthenticated(path, Contract[].class);
 
-		return data == null ? null : Arrays.asList(data);
+		return getAuthenticatedPaged(path, Contract[].class);
 	}
 
 	/**
@@ -304,6 +286,28 @@ public class Api {
 		UniverseName[] data = post(path, UniverseName[].class, body);
 
 		return data == null ? null : Arrays.asList(data);
+	}
+
+	private <T> List<T> getAuthenticatedPaged(String path, Class<T[]> valueTypeArray) {
+		T[] data = getAuthenticated(path, valueTypeArray);
+
+		if (data == null) {
+			return null;
+		}
+
+		List<T> dataList = new ArrayList<>(Arrays.asList(data));
+
+		int currentPage = 1;
+		Integer pages = client.getPages();
+		while (currentPage < pages) {
+			currentPage ++;
+			T[] data2 = getAuthenticated(path + "?page=" + currentPage, valueTypeArray);
+			if (data2 != null) {
+				dataList.addAll(Arrays.asList(data2));
+			}
+		}
+
+		return dataList;
 	}
 
 	private <T> T get(String path, Class<T> valueType) {
