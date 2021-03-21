@@ -53,7 +53,6 @@ Rebuild continuously, in a 2nd console:
 ### Docker
 
 ```shell
-docker-compose up
 docker-compose run --service-ports eve-tools-java /bin/bash
 
 # second console (find name with "docker ps")
