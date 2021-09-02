@@ -96,7 +96,11 @@ window.CorpCourierContracts = (function($) {
                 endLoc = 'Rahadalon';
             } else if (endLoc === 'Badivefi') {
                 endLoc = 'Efa';
-            }
+            } else if (endLoc === 'Jita') {
+                 endLoc = 'Ignoitton';
+             } else if (endLoc === 'Purjola') {
+                  endLoc = 'Maila';
+              }
             const startSys = Route.findSystem(startLoc);
             const endSys = Route.findSystem(endLoc);
             return Route.calculateRoute(startSys, endSys, 10);
@@ -106,6 +110,7 @@ window.CorpCourierContracts = (function($) {
         const bltMaxCollateral = 6000000000;
         const baseFee = 0;
         const cynoFee = 5000000; // per jump
+        //const cynoFee = 15000000; // per non-hub endpoint
         const distanceFee = 11000000; // per ly
 
     	$('tbody .reward').each(function() {
