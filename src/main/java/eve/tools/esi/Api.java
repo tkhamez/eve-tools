@@ -108,7 +108,7 @@ public class Api {
 	 * https://esi.evetech.net/ui/#/Character/get_characters_character_id
 	 */
 	public PublicInfo characterPublicInfo(Long characterId) {
-		String path = "/v4/characters/" + characterId;
+		String path = "/v5/characters/" + characterId;
 
 		return get(path, PublicInfo.class);
 	}
@@ -165,7 +165,7 @@ public class Api {
 	/* Planetary Interaction */
 
 	/**
-	 * https://esi.evetech.net/ui/#/Planetary32Interaction/get_characters_character_id_planets
+	 * https://esi.evetech.net/ui/#/Planetary%20Interaction/get_characters_character_id_planets
 	 * esi-planets.manage_planets.v1
 	 */
 	public List<PiPlanet> characterPlanet(Long characterId) {
@@ -176,7 +176,7 @@ public class Api {
 	}
 
 	/**
-	 * https://esi.evetech.net/ui/#/Planetary32Interaction/get_characters_character_id_planets
+	 * https://esi.evetech.net/ui/#/Planetary%20Interaction/get_characters_character_id_planets
 	 * esi-planets.manage_planets.v1
 	 */
 	public PlanetDetails characterPlanetDetail(Long characterId, Integer planetId) {
@@ -314,6 +314,7 @@ public class Api {
 		return client.get(valueType, url(path));
 	}
 
+	@SuppressWarnings("SameParameterValue")
 	private <T> T post(String path, Class<T> valueType, String jsonBody) {
 		return client.post(valueType, url(path), jsonBody);
 	}
@@ -322,6 +323,7 @@ public class Api {
 		return client.get(valueType, url(path), authHeaders());
 	}
 
+	@SuppressWarnings("SameParameterValue")
 	private <T> T postAuthenticated(String path, Class<T> valueType, String jsonBody) {
 		return client.post(valueType, url(path), authHeaders(), jsonBody);
 	}
