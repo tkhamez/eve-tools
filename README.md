@@ -60,6 +60,12 @@ export UID && docker-compose run --service-ports eve_tools_java /bin/bash
 docker exec -it eve-tools_eve_tools_java_run_7869ee4a4b78 /bin/bash
 ```
 
+## Update
+
+2022-09-17
+- Drop tables `spring_session` and `spring_session_attributes` and recreate them by executing `schema-postgresql.sql`.
+
+
 ## Copyright Notice
 
 This project is licensed under the [MIT license](LICENSE).
