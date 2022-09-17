@@ -1,7 +1,16 @@
 version: '3.1'
 services:
-  eve-tools-java:
+  eve_tools_java:
     image: openjdk:8-jdk-buster
     volumes: [ "./:/opt/eve-tools", "./.gradle:/root/.gradle" ]
     ports: [ "8080:8080" ]
+    user: ${UID}
     working_dir: /opt/eve-tools
+
+  eve_tools_db:
+    image: postgres:10-alpine
+    volumes: [./.db:/var/lib/postgresql/data]
+    environment:
+      POSTGRES_USER: eve_tools
+      POSTGRES_PASSWORD: eve_tools
+    ports: ["54320:5432"]
