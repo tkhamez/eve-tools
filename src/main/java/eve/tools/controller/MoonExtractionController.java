@@ -39,7 +39,7 @@ public class MoonExtractionController {
 		if (publicInfo == null && api.getClient().getLastError() != null) {
 			model.addAttribute("apiError", "API error: " + api.getClient().getLastError().getMessage());
 
-		} else {
+		} else if (publicInfo != null) {
 			List<CorporationMiningExtraction> cme = api.corporationMiningExtractions(publicInfo.getCorporation_id());
 			if (cme != null) {
 				model.addAttribute("extractions", cme);
@@ -54,14 +54,12 @@ public class MoonExtractionController {
 	}
 
 	private Map<Long, String> moons(List<CorporationMiningExtraction> cmes) {
-		Map<Long, String> moons = new HashMap<Long, String>();
+		Map<Long, String> moons = new HashMap<>();
 
 		for (CorporationMiningExtraction cme : cmes) {
 			if (! moons.containsKey(cme.getMoon_id())) {
 				Moon moon = api.universeMoon(cme.getMoon_id());
-				if (moon == null) {
-					continue;
-				} else {
+				if (moon != null) {
 					moons.put(cme.getMoon_id(), moon.getName());
 				}
 			}
@@ -71,7 +69,7 @@ public class MoonExtractionController {
 	}
 
 	private Map<Long, String> structures(List<CorporationMiningExtraction> cmes) {
-		List<Long> structIds = new ArrayList<Long>();
+		List<Long> structIds = new ArrayList<>();
 		for (CorporationMiningExtraction cme : cmes) {
 			if (! structIds.contains(cme.getStructure_id())) {
 				structIds.add(cme.getStructure_id());

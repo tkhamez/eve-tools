@@ -28,7 +28,7 @@ public class Auth {
 	private EveConfigService conf;
 
 	public Token token(String code) {
-		MultiValueMap<String, String> body = new LinkedMultiValueMap<String, String>();
+		MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
 		body.add("grant_type", "authorization_code");
 		body.add("code", code);
 
@@ -36,7 +36,7 @@ public class Auth {
 	}
 
 	public Token refresh(String refreshToken) {
-		MultiValueMap<String, String> body = new LinkedMultiValueMap<String, String>();
+		MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
 		body.add("grant_type", "refresh_token");
 		body.add("refresh_token", refreshToken);
 

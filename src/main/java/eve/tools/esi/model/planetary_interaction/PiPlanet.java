@@ -28,7 +28,7 @@ public class PiPlanet {
 
 	private Integer num_pins;
 
-	private Map<String, Object> _other = new HashMap<String, Object>();
+	private Map<String, Object> _other = new HashMap<>();
 
 	@JsonAnyGetter
 	public Map<String, Object> any() {

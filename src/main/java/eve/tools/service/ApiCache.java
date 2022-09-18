@@ -21,16 +21,16 @@ import eve.tools.esi.model.universe.Type;
 @Scope(value = "singleton")
 public class ApiCache {
 
-	private Map<Integer, Station> station =  new HashMap<>();
+	private final Map<Integer, Station> station =  new HashMap<>();
 
-	private Map<Integer, Type> types =  new HashMap<>();
+	private final Map<Integer, Type> types =  new HashMap<>();
 
-	private Map<Long, Moon> moons =  new HashMap<>();
+	private final Map<Long, Moon> moons =  new HashMap<>();
 
-	private Map<Integer, Planet> planets =  new HashMap<>();
+	private final Map<Integer, Planet> planets =  new HashMap<>();
 
 	public Station getStation(Integer id) {
-		return station.containsKey(id) ? station.get(id) : null;
+		return station.getOrDefault(id, null);
 	}
 
 	public void setStation(Integer id, Station data) {
@@ -38,7 +38,7 @@ public class ApiCache {
 	}
 
 	public Type getType(Integer id) {
-		return types.containsKey(id) ? types.get(id) : null;
+		return types.getOrDefault(id, null);
 	}
 
 	public void setType(Integer id, Type data) {
@@ -46,7 +46,7 @@ public class ApiCache {
 	}
 
 	public Moon getMoon(Long id) {
-		return moons.containsKey(id) ? moons.get(id) : null;
+		return moons.getOrDefault(id, null);
 	}
 
 	public void setMoon(Long id, Moon data) {
@@ -54,7 +54,7 @@ public class ApiCache {
 	}
 
 	public Planet getPlanet(Integer id) {
-		return planets.containsKey(id) ? planets.get(id) : null;
+		return planets.getOrDefault(id, null);
 	}
 
 	public void setPlanet(Integer id, Planet data) {

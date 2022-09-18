@@ -23,7 +23,7 @@ public class Structure {
 
 	private Position position;
 
-	private Map<String, Object> _other = new HashMap<String, Object>();
+	private Map<String, Object> _other = new HashMap<>();
 
 	@JsonAnyGetter
 	public Map<String, Object> any() {

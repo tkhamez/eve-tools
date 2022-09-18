@@ -44,7 +44,7 @@ public class AssetsController {
 		if (assets == null && api.getClient().getLastError() != null) {
 			model.addAttribute("apiError", "API error: " + api.getClient().getLastError().getMessage());
 
-		} else {
+		} else if (assets != null) {
 			model.addAttribute("assetsLocation",
 				groupByLocation(assets, structures(assets), types(assets), names(assets)));
 		}
@@ -53,7 +53,7 @@ public class AssetsController {
 	}
 
 	private Map<Long, String> structures(List<Asset> assets) {
-		List<Long> structIds = new ArrayList<Long>();
+		List<Long> structIds = new ArrayList<>();
 		for (Asset asset : assets) {
 
 			// TODO 'for whatever reason, the location flag for things within asset safety containers is "Hangar"'
@@ -65,10 +65,10 @@ public class AssetsController {
 				if (! structIds.contains(asset.getLocation_id())) {
 					structIds.add(asset.getLocation_id());
 				}
-			} else {
+			} /*else {
 				// location_type = other
 				// location_flag = MedSlot0, Cargo etc.
-			}
+			}*/
 		}
 		if (structIds.size() == 0) {
 			return null;
@@ -78,7 +78,7 @@ public class AssetsController {
 	}
 
 	private Map<Long, String> names(List<Asset> assets) {
-		List<Long> itemIds = new ArrayList<Long>();
+		List<Long> itemIds = new ArrayList<>();
 		for (Asset asset : assets) {
 			if (! asset.getIs_singleton()) {
 				continue;
@@ -90,12 +90,10 @@ public class AssetsController {
 
 		List<AssetName> assetNames = api.characterAssetNames(characterId, itemIds);
 
-		Map<Long, String> names = new HashMap<Long, String>();
+		Map<Long, String> names = new HashMap<>();
 
 		if (assetNames != null) {
-			assetNames.forEach(an -> {
-				names.put(an.getItem_id(), an.getName());
-			});
+			assetNames.forEach(an -> names.put(an.getItem_id(), an.getName()));
 		}
 
 		return names;
@@ -109,7 +107,7 @@ public class AssetsController {
 		Map<Long, List<Assets>> level2 = new HashMap<>();
 		for (Asset asset : assets) {
 			Long locId = asset.getLocation_id();
-			String typeName = types.containsKey(asset.getType_id()) ? types.get(asset.getType_id()) : "";
+			String typeName = types.getOrDefault(asset.getType_id(), "");
 			String itemName = null;
 			if (names.containsKey(asset.getItem_id())) {
 				itemName = names.get(asset.getItem_id());
@@ -132,15 +130,15 @@ public class AssetsController {
 		level1.forEach((l1, a1) -> {
 			List<Assets> tmpLvl1 = new ArrayList<>();
 			a1.stream()
-				.sorted(Comparator.comparing(a -> a.getTypeName()))
-				.forEach(entry -> { tmpLvl1.add(entry); });
+				.sorted(Comparator.comparing(Assets::getTypeName))
+				.forEach(tmpLvl1::add);
 			level1.replace(l1, tmpLvl1);
 		});
 
 		// assets in containers or ships (setChildren), remember rest (level3)
 		Map<Long, List<Assets>> level3 = new HashMap<>();
 		level2.forEach((locId2, assetList2) -> {
-			Boolean foundContainer1 = false;
+			boolean foundContainer1 = false;
 			for (List<Assets> acList1: level1.values()) {
 				for (Assets ac1: acList1) {
 					if (locId2.equals(ac1.getItemId())) {
@@ -148,8 +146,8 @@ public class AssetsController {
 						// sort list by location flag, e. g. Cargo, HiSlot0 etc.
 						List<Assets> tmpLvl2 = new ArrayList<>();
 						assetList2.stream()
-							.sorted(Comparator.comparing(a -> a.getLocationFlag()))
-							.forEach(entry -> { tmpLvl2.add(entry); });
+							.sorted(Comparator.comparing(Assets::getLocationFlag))
+							.forEach(tmpLvl2::add);
 
 						ac1.setChildren(tmpLvl2);
 						foundContainer1 = true;
@@ -168,7 +166,7 @@ public class AssetsController {
 		// assets in nested containers (e. g. freight container in ships), remember rest (levelX)
 		Map<Long, List<Assets>> levelX = new HashMap<>();
 		level3.forEach((locId3, assetList3) -> {
-			Boolean foundContainer2 = false;
+			boolean foundContainer2 = false;
 			for (List<Assets> acList1: level1.values()) {
 				for (Assets ac1: acList1) {
 					for (Assets ac2: ac1.getChildren()) {
@@ -177,8 +175,8 @@ public class AssetsController {
 							// sort this list by type name again
 							List<Assets> tmpLvl3 = new ArrayList<>();
 							assetList3.stream()
-								.sorted(Comparator.comparing(a -> a.getTypeName()))
-								.forEach(entry -> { tmpLvl3.add(entry); });
+								.sorted(Comparator.comparing(Assets::getTypeName))
+								.forEach(tmpLvl3::add);
 
 							ac2.setChildren(tmpLvl3);
 							foundContainer2 = true;
@@ -202,24 +200,17 @@ public class AssetsController {
 		List<AssetsLocation> assetsLocation = new ArrayList<>();
 		level1.entrySet()
 			.stream()
-			.sorted(new Comparator<Map.Entry<Long, List<Assets>>>() {
-				public int compare(Map.Entry<Long, List<Assets>> a, Map.Entry<Long, List<Assets>> b){
-					return a.getValue().get(0).getLocationName().compareTo(
-							b.getValue().get(0).getLocationName());
-				}
-			})
-			.forEach(entry -> {
-				assetsLocation.add(new AssetsLocation(entry.getValue(), entry.getKey(),
-					entry.getValue().get(0).getLocationName()));
-			});
+			.sorted(Comparator.comparing(a -> a.getValue().get(0).getLocationName()))
+			.forEach(entry -> assetsLocation.add(new AssetsLocation(
+				entry.getValue(),
+				entry.getKey(),
+				entry.getValue().get(0).getLocationName()
+			)));
 
 		// append rest to the list TODO where are these? might be an ESI bug
 		// they are: lost ships? deleted stuff?
 		levelX.forEach((locIdX, assetListX) -> {
-			List<Assets> assetsX = new ArrayList<>();
-			assetListX.forEach(assetX -> {
-				assetsX.add(assetX);
-			});
+			List<Assets> assetsX = new ArrayList<>(assetListX);
 			assetsLocation.add(new AssetsLocation(assetsX, locIdX));
 		});
 
@@ -227,7 +218,7 @@ public class AssetsController {
 	}
 
 	private Map<Integer, String> types(List<Asset> assets) {
-		Map<Integer, String> types = new HashMap<Integer, String>();
+		Map<Integer, String> types = new HashMap<>();
 
 		List<Long> typeIds = new ArrayList<>();
 		for (Asset asset : assets) {
@@ -241,9 +232,7 @@ public class AssetsController {
 
 		List<UniverseName> names = api.universeNames(typeIds);
 		if (names != null) {
-			names.forEach((name) -> {
-				types.put(name.getId().intValue(), name.getName());
-			});
+			names.forEach((name) -> types.put(name.getId().intValue(), name.getName()));
 		}
 
 		return types;

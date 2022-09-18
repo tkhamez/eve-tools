@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import java.util.Objects;
+
 @Service
 public class EveConfigService {
 
@@ -34,7 +36,7 @@ public class EveConfigService {
 	public String loginDomain() {
 		env();
 
-		if (eveEnv == "sisi") {
+		if (Objects.equals(eveEnv, "sisi")) {
 			return "sisilogin.testeveonline.com";
 		} else {
 			return "login.eveonline.com";
@@ -44,7 +46,7 @@ public class EveConfigService {
 	public String clientId() {
 		env();
 
-		if (eveEnv == "sisi") {
+		if (Objects.equals(eveEnv, "sisi")) {
 			return env.getProperty("eve-tools.sisi.client-id");
 		} else {
 			return env.getProperty("eve-tools.client-id");
@@ -54,7 +56,7 @@ public class EveConfigService {
 	public String secretKey() {
 		env();
 
-		if (eveEnv == "sisi") {
+		if (Objects.equals(eveEnv, "sisi")) {
 			return env.getProperty("eve-tools.sisi.secret-key");
 		} else {
 			return env.getProperty("eve-tools.secret-key");
@@ -70,7 +72,7 @@ public class EveConfigService {
 	public String dataSource() {
 		env();
 
-		if (eveEnv == "sisi") {
+		if (Objects.equals(eveEnv, "sisi")) {
 			return "singularity";
 		} else {
 			return "tranquility";

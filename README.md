@@ -53,8 +53,8 @@ Rebuild continuously, in a 2nd console:
 ### Docker
 
 ```shell
-export UID && docker-compose up
-export UID && docker-compose run --service-ports eve_tools_java /bin/bash
+docker-compose up
+docker-compose run --service-ports eve_tools_java /bin/bash
 
 # second console (find name with "docker ps")
 docker exec -it eve-tools_eve_tools_java_run_7869ee4a4b78 /bin/bash

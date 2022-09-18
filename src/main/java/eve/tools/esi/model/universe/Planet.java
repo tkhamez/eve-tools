@@ -23,7 +23,7 @@ public class Planet {
 
 	private Long system_id;
 
-	private Map<String, Object> _other = new HashMap<String, Object>();
+	private Map<String, Object> _other = new HashMap<>();
 
 	@JsonAnyGetter
 	public Map<String, Object> any() {

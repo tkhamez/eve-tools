@@ -33,7 +33,7 @@ public class PublicInfo {
 
 	private Float security_status;
 
-	private Map<String, Object> _other = new HashMap<String, Object>();
+	private Map<String, Object> _other = new HashMap<>();
 
 	@JsonAnyGetter
 	public Map<String, Object> any() {

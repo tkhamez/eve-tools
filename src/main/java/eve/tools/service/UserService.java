@@ -1,9 +1,6 @@
 package eve.tools.service;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-import java.util.TimeZone;
+import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -50,12 +47,9 @@ public class UserService implements UserDetailsService {
 	public void loginUser(Token token, Verify verify) {
 		String username = String.valueOf(verify.getCharacterID());
 
-		List<String> scopes = new ArrayList<String>();
-		for (String scopeName : verify.getScopes().split(" ")) {
-			scopes.add(scopeName);
-		}
+		List<String> scopes = new ArrayList<>(Arrays.asList(verify.getScopes().split(" ")));
 
-		User user = null;
+		User user;
 		try {
 			user = (User) loadUserByUsername(username);
 		} catch (UsernameNotFoundException e) {
@@ -89,7 +83,7 @@ public class UserService implements UserDetailsService {
 	}
 
 	public List<String> getScopesForRole(String role) {
-		List<String> scopes = new ArrayList<String>();
+		List<String> scopes = new ArrayList<>();
 
 		switch (role) {
 		case "ROLE_EVE_CORP_CONTRACTS":
@@ -113,7 +107,7 @@ public class UserService implements UserDetailsService {
 	}
 
 	public List<String> getScopesForRoles(String[] roles) {
-		List<String> scopes = new ArrayList<String>();
+		List<String> scopes = new ArrayList<>();
 
 		for (String role: roles) {
 			getScopesForRole(role).forEach((scope) -> {
@@ -127,7 +121,7 @@ public class UserService implements UserDetailsService {
 	}
 
 	private List<Role> scopesToRoles(List<String> scopes) {
-		List<Role> roles = new ArrayList<Role>();
+		List<Role> roles = new ArrayList<>();
 
 		// All roles must exist in DB, see EveDataLoader
 
@@ -141,9 +135,9 @@ public class UserService implements UserDetailsService {
 			"ROLE_EVE_PI"
 		};
 		for (String roleName: roleNames) {
-			Boolean hasRole = true;
+			boolean hasRole = true;
 			for (String scopeName : getScopesForRole(roleName)) {
-				Boolean inScopes = false;
+				boolean inScopes = false;
 				for (String scope : scopes) {
 					if (scope.equals(scopeName)) {
 						inScopes = true;

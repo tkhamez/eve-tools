@@ -28,12 +28,9 @@ public class DataService {
 	 *
 	 * see for location ID ranges
 	 * https://docs.esi.evetech.net/docs/asset_location_id
-	 *
-	 * @param structIds
-	 * @return Map
 	 */
 	public Map<Long, String> structureNames(List<Long> structIds) {
-		Map<Long, String> structures = new HashMap<Long, String>();
+		Map<Long, String> structures = new HashMap<>();
 
 		for (Long structId : structIds) {
 			if (structId < 64000000) {

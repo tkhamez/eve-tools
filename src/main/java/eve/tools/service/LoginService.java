@@ -27,9 +27,7 @@ public class LoginService {
 
 	public String getUrl(String authState, String role) {
 		StringJoiner scopes = new StringJoiner("%20");
-		userService.getScopesForRole(role).forEach((scope) -> {
-			scopes.add(scope);
-		});
+		userService.getScopesForRole(role).forEach(scopes::add);
 
 		return url(authState, scopes.toString());
 	}
@@ -42,9 +40,7 @@ public class LoginService {
 			"ROLE_EVE_ASSETS",
 			"ROLE_EVE_PI"
 		};
-		userService.getScopesForRoles(allRoles).forEach((scope) -> {
-			scopes.add(scope);
-		});
+		userService.getScopesForRoles(allRoles).forEach(scopes::add);
 
 		return url(authState, scopes.toString());
 	}

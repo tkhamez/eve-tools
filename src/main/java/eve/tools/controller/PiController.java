@@ -37,7 +37,7 @@ public class PiController {
 		if (planets == null && api.getClient().getLastError() != null) {
 			model.addAttribute("apiError", "API error: " + api.getClient().getLastError().getMessage());
 
-		} else {
+		} else if (planets != null) {
 			model.addAttribute("planets", planets);
 			model.addAttribute("planetNames", planetNames(planets));
 
@@ -56,7 +56,7 @@ public class PiController {
 	}
 
 	private Map<Integer, String> planetNames(List<PiPlanet> cps) {
-		Map<Integer, String> names = new HashMap<Integer, String>();
+		Map<Integer, String> names = new HashMap<>();
 
 		cps.forEach(cp -> {
 			Planet planet = api.universePlanet(cp.getPlanet_id());
@@ -69,7 +69,7 @@ public class PiController {
 	}
 
 	private Map<Integer, String> types(Map<Integer, PlanetDetails> colonies) {
-		Map<Integer, String> types = new HashMap<Integer, String>();
+		Map<Integer, String> types = new HashMap<>();
 
 		List<Long> typeIds = new ArrayList<>();
 		colonies.forEach((k, colony) -> {
@@ -86,9 +86,7 @@ public class PiController {
 
 		List<UniverseName> names = api.universeNames(typeIds);
 		if (names != null) {
-			names.forEach((name) -> {
-				types.put(name.getId().intValue(), name.getName());
-			});
+			names.forEach((name) -> types.put(name.getId().intValue(), name.getName()));
 		}
 
 		return types;

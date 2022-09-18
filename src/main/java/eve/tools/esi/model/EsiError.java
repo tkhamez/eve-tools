@@ -25,7 +25,7 @@ public class EsiError {
 
 	private String sso_status;
 
-	private Map<String, Object> _other = new HashMap<String, Object>();
+	private Map<String, Object> _other = new HashMap<>();
 
 	@JsonAnyGetter
 	public Map<String, Object> any() {
@@ -42,7 +42,7 @@ public class EsiError {
     	if (getError() != null) {
     		message = getError();
     	} else {
-    		message = "HTTP Status Code: " + String.valueOf(get_http_status_code());
+    		message = "HTTP Status Code: " + get_http_status_code();
     	}
 
     	return message;

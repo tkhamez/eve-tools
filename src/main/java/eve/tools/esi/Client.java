@@ -68,18 +68,18 @@ public class Client {
 	private <T> T request(Class<T> type, String url, HttpMethod method, HttpHeaders headers, Object body) {
 		headers.set("User-Agent", "EVE Tools/0.1.0-SNAPSHOT (https://github.com/tkhamez/eve-tools)");
 
-		HttpEntity<Object> requestEntity = null;
+		HttpEntity<Object> requestEntity;
 		if (body != null) {
-			requestEntity = new HttpEntity<Object>(body, headers);
+			requestEntity = new HttpEntity<>(body, headers);
 		} else {
-			requestEntity = new HttpEntity<Object>(headers);
+			requestEntity = new HttpEntity<>(headers);
 		}
 
-		List<ClientHttpRequestInterceptor> interceptors = new ArrayList<ClientHttpRequestInterceptor>();
+		List<ClientHttpRequestInterceptor> interceptors = new ArrayList<>();
 		interceptors.add(new LoggingRequestInterceptor());
 		//restTemplate.setInterceptors(interceptors);
 
-		ResponseEntity<String> response = null;
+		ResponseEntity<String> response;
 		try {
 			response = restTemplate.exchange(url, method, requestEntity, String.class);
 		} catch(RestClientException e) {
