@@ -43,6 +43,7 @@ dependencies {
 	compile("org.json:json:20220320")
 
 	compileOnly('org.projectlombok:lombok')
+	annotationProcessor 'org.projectlombok:lombok'
 
 	runtime('org.springframework.boot:spring-boot-devtools')
 	//runtime("org.springframework.boot:spring-boot-properties-migrator")
