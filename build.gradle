@@ -1,6 +1,6 @@
 buildscript {
 	ext {
-		springBootVersion = '2.0.9.RELEASE'
+		springBootVersion = '2.1.18.RELEASE'
 	}
 	repositories {
 		mavenCentral()
@@ -24,7 +24,7 @@ repositories {
 }
 
 ext {
-	springCloudVersion = 'Finchley.SR4'
+	springCloudVersion = 'Greenwich.SR6'
 }
 
 dependencies {
@@ -32,7 +32,7 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-security')
 
 	compile('org.springframework.boot:spring-boot-starter-thymeleaf')
-	compile('org.thymeleaf.extras:thymeleaf-extras-springsecurity4')
+	compile('org.thymeleaf.extras:thymeleaf-extras-springsecurity5')
 	compile('net.sourceforge.nekohtml:nekohtml')
 
 	compile('org.springframework.boot:spring-boot-starter-web')
