@@ -17,7 +17,7 @@ apply plugin: 'io.spring.dependency-management'
 
 group = 'eve.tools'
 version = '0.1.0-SNAPSHOT'
-sourceCompatibility = 1.8
+sourceCompatibility = 11
 
 repositories {
 	mavenCentral()
