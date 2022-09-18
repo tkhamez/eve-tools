@@ -18,7 +18,7 @@ public class EveDataLoader implements CommandLineRunner {
 	private RoleRepository roleRepository;
 
 	@Override
-	public void run(String... strings) throws Exception {
+	public void run(String... strings) {
 
 		if (roleRepository.findByRole("ROLE_EVE") == null) {
 			roleRepository.save(new Role("ROLE_EVE"));

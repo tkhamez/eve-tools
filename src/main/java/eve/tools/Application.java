@@ -37,11 +37,11 @@ public class Application {
 		// no exception for 404 etc.
 		restTemplate.setErrorHandler(new ResponseErrorHandler() { // see also DefaultResponseErrorHandler
 			@Override
-			public boolean hasError(ClientHttpResponse response) throws IOException {
+			public boolean hasError(ClientHttpResponse response) {
 				return false;
 			}
 			@Override
-			public void handleError(ClientHttpResponse response) throws IOException {
+			public void handleError(ClientHttpResponse response) {
 			}
 		});
 

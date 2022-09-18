@@ -126,7 +126,7 @@ public class AssetsController {
 			}
 		}
 
-		// sort level1's Assets list by type name, e. g. Ares, Damage Control II etc.
+		// sort level1's Assets list by type name, e.g. Ares, Damage Control II etc.
 		level1.forEach((l1, a1) -> {
 			List<Assets> tmpLvl1 = new ArrayList<>();
 			a1.stream()
@@ -163,7 +163,7 @@ public class AssetsController {
 			}
 		});
 
-		// assets in nested containers (e. g. freight container in ships), remember rest (levelX)
+		// assets in nested containers (e.g. freight container in ships), remember rest (levelX)
 		Map<Long, List<Assets>> levelX = new HashMap<>();
 		level3.forEach((locId3, assetList3) -> {
 			boolean foundContainer2 = false;
