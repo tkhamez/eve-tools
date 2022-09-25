@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import eve.tools.entity.Role;
 import eve.tools.entity.User;
 import eve.tools.esi.model.oauth.Token;
-import eve.tools.esi.model.oauth.Verify;
+import eve.tools.data.AccessToken;
 import eve.tools.repository.UserRepository;
 
 @Service
@@ -44,10 +44,9 @@ public class UserService implements UserDetailsService {
 	/**
 	 * Finds/creates user, adds data and authenticates.
 	 */
-	public void loginUser(Token token, Verify verify) {
-		String username = String.valueOf(verify.getCharacterID());
-
-		List<String> scopes = new ArrayList<>(Arrays.asList(verify.getScopes().split(" ")));
+	public void loginUser(Token token, AccessToken data) {
+		String username = String.valueOf(data.getCharacterId());
+		List<String> scopes = data.getScopes();
 
 		User user;
 		try {
@@ -56,7 +55,7 @@ public class UserService implements UserDetailsService {
 			user = new User(username);
 		}
 
-		user.setCharacterName(verify.getCharacterName());
+		user.setCharacterName(data.getCharacterName());
 		user.setScopes(scopes);
 		user.setAuthorities(scopesToRoles(scopes));
 		user.setRefreshToken(token.getRefresh_token());

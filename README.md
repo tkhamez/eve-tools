@@ -64,9 +64,11 @@ docker exec -it eve-tools_eve_tools_java_run_7869ee4a4b78 /bin/bash
 
 ## Update
 
+2022-09-25
+- Execute: `ALTER TABLE eve_user ALTER COLUMN access_token TYPE text;`
+
 2022-09-17
 - Drop tables `spring_session` and `spring_session_attributes` and recreate them by executing `schema-postgresql.sql`.
-
 
 ## Copyright Notice
 

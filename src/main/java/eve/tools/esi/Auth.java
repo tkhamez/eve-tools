@@ -10,7 +10,6 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
 import eve.tools.esi.model.oauth.Token;
-import eve.tools.esi.model.oauth.Verify;
 import eve.tools.service.EveConfigService;
 
 /**
@@ -43,15 +42,6 @@ public class Auth {
 		return tokenRequest(body);
 	}
 
-	public Verify verify(String accessToken) {
-		HttpHeaders headers = new HttpHeaders();
-		headers.set("Authorization", "Bearer " + accessToken);
-
-		String url = "https://" + conf.loginDomain() + "/oauth/verify";
-
-		return client.get(Verify.class, url, headers);
-	}
-
 	private Token tokenRequest(MultiValueMap<String, String> body) {
 		String encodedAuth = Base64.getEncoder().encodeToString(
 				(conf.clientId() + ":" + conf.secretKey()).getBytes());
@@ -60,7 +50,7 @@ public class Auth {
 		headers.set("Authorization", "Basic " + encodedAuth);
 		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
-		String url = "https://" + conf.loginDomain() + "/oauth/token";
+		String url = "https://" + conf.loginDomain() + "/v2/oauth/token";
 
 		return client.post(Token.class, url, headers, body);
 	}

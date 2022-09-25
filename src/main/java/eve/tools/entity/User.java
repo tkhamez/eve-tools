@@ -30,7 +30,8 @@ public class User implements UserDetails {
 	@ManyToMany
 	private List<Role> roles;
 
-	private String accessToken; // it's (about) 88 chars
+	@Column(columnDefinition = "TEXT")
+	private String accessToken;
 
 	private Calendar expiresOn;
 

@@ -53,7 +53,7 @@ public class LoginService {
 			log.error(uee.getMessage());
 		}
 
-		return "https://" + conf.loginDomain() + "/oauth/authorize" +
+		return "https://" + conf.loginDomain() + "/v2/oauth/authorize" +
 			"?response_type=code" +
 			"&redirect_uri=" + redirectUri +
 			"&client_id=" + conf.clientId() +
