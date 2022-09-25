@@ -2,13 +2,16 @@ version: '3.1'
 services:
   eve_tools_java:
     image: openjdk:11-jdk-slim-bullseye
+    #image: eclipse-temurin:17-jdk-jammy
     volumes: [ "./:/opt/eve-tools", "./.gradle-docker:/root/.gradle" ]
     ports: [ "8080:8080" ]
     working_dir: /opt/eve-tools
 
   eve_tools_db:
     image: postgres:10-alpine
-    volumes: [./.db:/var/lib/postgresql/data]
+    #image: postgres:14-alpine
+    volumes: [./.db/10:/var/lib/postgresql/data]
+    #volumes: [./.db/14:/var/lib/postgresql/data]
     environment:
       POSTGRES_USER: eve_tools
       POSTGRES_PASSWORD: eve_tools

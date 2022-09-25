@@ -6,7 +6,7 @@ https://simple-eve-tools.herokuapp.com
 
 ### Database
 
-The app needs a PostgreSQL database (tested with version 10).
+The app needs a PostgreSQL database (tested with version 10 and 14).
 
 Create the following environment variables:
 ```
@@ -38,6 +38,8 @@ EVE_TOOLS_SISI_SECRET_KEY = cd34
 ```
 
 ## Run
+
+Tested with Java 11 and 17.
 
 ```
 ./gradlew bootRun
