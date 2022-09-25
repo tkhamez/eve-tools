@@ -3,7 +3,6 @@ package eve.tools.controller;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.oauth2.common.util.RandomValueStringGenerator;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import eve.tools.service.EveConfigService;
 import eve.tools.service.LoginService;
+
+import java.util.concurrent.ThreadLocalRandom;
 
 @Controller
 public class HomeController {
@@ -40,7 +41,7 @@ public class HomeController {
 
 		model.addAttribute("sisiEnabled", conf.sisiEnabled());
 
-		String authState = new RandomValueStringGenerator(10).generate();
+		String authState = randomString();
 		httpSession.setAttribute("authState", authState);
 
 		model.addAttribute("corpContractsUrl", loginService.getUrl(authState, "ROLE_EVE_CORP_CONTRACTS"));
@@ -50,5 +51,16 @@ public class HomeController {
 		model.addAttribute("allUrl", loginService.getUrl(authState));
 
 		return "home";
+	}
+
+	private String randomString() {
+		int length = 10;
+		String alphabet = " 0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+
+		return ThreadLocalRandom.current()
+			.ints(length, 0, alphabet.length())
+			.map(alphabet::charAt)
+			.collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
+			.toString();
 	}
 }

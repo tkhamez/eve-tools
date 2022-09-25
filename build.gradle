@@ -1,6 +1,6 @@
 buildscript {
 	ext {
-		springBootVersion = '2.3.12.RELEASE'
+		springBootVersion = '2.4.13'
 	}
 	repositories {
 		mavenCentral()
@@ -24,7 +24,7 @@ repositories {
 }
 
 ext {
-	springCloudVersion = 'Hoxton.SR12'
+	springCloudVersion = '2020.0.6'
 }
 
 dependencies {
@@ -36,7 +36,6 @@ dependencies {
 	compile('net.sourceforge.nekohtml:nekohtml')
 
 	compile('org.springframework.boot:spring-boot-starter-web')
-	compile('org.springframework.cloud:spring-cloud-starter-oauth2')
 	compile('org.springframework.session:spring-session-core')
 	compile('org.springframework.session:spring-session-jdbc')
 	compile("com.fasterxml.jackson.core:jackson-databind")
