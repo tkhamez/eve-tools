@@ -1,6 +1,8 @@
-# eve-tools
+# EVE Tools
 
-https://simple-eve-tools.herokuapp.com
+Shows you your corporation courier contracts, assets, planetary installations and moon extractions.
+
+https://eve-tools.tian-space.net/
 
 ## Setup
 
@@ -44,6 +46,8 @@ EVE_TOOLS_SISI_SECRET_KEY = cd34
 
 Tested with Java 11 and 17.
 
+### Dev
+
 ```
 ./gradlew bootRun
 ```
@@ -63,6 +67,13 @@ docker-compose run --service-ports eve_tools_java /bin/bash
 
 # second console (find name with "docker ps")
 docker exec -it eve-tools_eve_tools_java_run_7869ee4a4b78 /bin/bash
+```
+
+### Prod
+
+```shell
+./gradlew clean bootJar
+java -jar build/libs/eve-tools-0.1.0-SNAPSHOT.jar --server.port=8080
 ```
 
 ## Update
