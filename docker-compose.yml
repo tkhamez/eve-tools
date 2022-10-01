@@ -16,3 +16,13 @@ services:
       POSTGRES_USER: eve_tools
       POSTGRES_PASSWORD: eve_tools
     ports: ["54320:5432"]
+
+  eve_tools_mysql:
+    image: mysql:8.0-debian
+    volumes: [./.db/m8:/var/lib/mysql]
+    environment:
+      MYSQL_ROOT_PASSWORD: eve_tools
+      MYSQL_USER: eve_tools
+      MYSQL_PASSWORD: eve_tools
+      MYSQL_DATABASE: eve_tools
+    ports: ["33060:3306"]

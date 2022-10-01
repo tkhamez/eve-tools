@@ -6,14 +6,17 @@ https://simple-eve-tools.herokuapp.com
 
 ### Database
 
-The app needs a PostgreSQL database (tested with version 10 and 14).
+The app needs a PostgreSQL or MySQL database (tested with PostgreSQL 10, 14 and MySQL 8).
 
 Create the following environment variables:
 ```
-EVE_TOOLS_JDBC_DATABASE_URL      = jdbc:postgresql://localhost/database
+EVE_TOOLS_JDBC_DRIVER_NAME       = org.postgresql.Driver ; or com.mysql.cj.jdbc.Driver
+EVE_TOOLS_JDBC_DATABASE_URL      = jdbc:postgresql://localhost/database ; or jdbc:mysql://localhost/database
 EVE_TOOLS_JDBC_DATABASE_USERNAME = username
 EVE_TOOLS_JDBC_DATABASE_PASSWORD = password
 ```
+
+Create the tables from `schema-postgresql.sql` or `schema-mysql.sql`.
 
 ### EVE App
 

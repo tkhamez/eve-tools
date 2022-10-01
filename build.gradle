@@ -47,6 +47,7 @@ dependencies {
 	runtimeOnly('org.springframework.boot:spring-boot-devtools')
 	//runtimeOnly("org.springframework.boot:spring-boot-properties-migrator")
 	runtimeOnly('org.postgresql:postgresql')
+	runtimeOnly 'mysql:mysql-connector-java'
 
 	testImplementation('org.springframework.boot:spring-boot-starter-test')
 	testImplementation('org.springframework.security:spring-security-test')
