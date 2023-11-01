@@ -74,11 +74,10 @@ public class LoginController {
 	}
 
 	private AccessToken parseToken(final String accessToken) {
-		// TODO signature should be verified.
 		AccessToken data = null;
 		try {
 			String[] chunks = accessToken.split("\\.");
-			String payload = new String(Base64.getDecoder().decode(chunks[1]));
+			String payload = new String(Base64.getUrlDecoder().decode(chunks[1]));
 			JSONObject jsonObject = new JSONObject(payload);
 
 			JSONArray jsonArray = jsonObject.getJSONArray("scp");
