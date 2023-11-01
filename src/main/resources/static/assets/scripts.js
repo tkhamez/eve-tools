@@ -149,7 +149,7 @@ window.CorpCourierContracts = (function($) {
                 }
                 title += route[i].to.name + ', ';
             }
-            title += distance + ' ly.';
+            title += (Math.round(distance * 100) / 100) + ' ly.';
 
             const volumeShare     = volume / bltMaxVolume;
             const collateralShare = collateral / bltMaxCollateral;
