@@ -102,8 +102,14 @@ window.CorpCourierContracts = (function($) {
                 endLoc = 'Maila';
             } else if (endLoc === 'Nonni') {
                 endLoc = 'Aunenen';
+            } else if (endLoc === 'Otalieto') {
+                endLoc = 'Daras';
             } else if (endLoc === 'Onnamon') {
                 endLoc = 'Kinakka';
+            } else if (endLoc === 'Torrinos') {
+                endLoc = 'EC-P8R';
+            } else if (endLoc === 'Adacyne') {
+                endLoc = 'Maut';
             }
             const startSys = Route.findSystem(startLoc);
             const endSys = Route.findSystem(endLoc);
