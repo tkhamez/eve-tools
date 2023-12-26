@@ -1,21 +1,21 @@
 window.$(function() {
 
-	window.$('.navbar .name-popover').popover({
-		html : true,
-		content : function() {
-			return window.$('#eve_navbar_popover').html();
-		}
-	});
+    window.$('.navbar .name-popover').popover({
+        html : true,
+        content : function() {
+            return window.$('#eve_navbar_popover').html();
+        }
+    });
 
     CorpCourierContracts.ready();
 
     window.$('.moon-extraction .table').DataTable({
-		"aaSorting" : [], // no initial sorting
-		"paging" : false,
-		"info" : false,
-		"searching" : false,
-		fixedHeader : true
-	});
+        "aaSorting" : [], // no initial sorting
+        "paging" : false,
+        "info" : false,
+        "searching" : false,
+        fixedHeader : true
+    });
 
     // keep alive ping
     window.setInterval(function () {
@@ -67,7 +67,7 @@ window.CorpCourierContracts = (function($) {
             reward += parseFloat($(this).data('value'));
         });
         $(column + ' .selected .calc-reward').each(function() {
-        	calcReward += parseFloat($(this).data('value'));
+            calcReward += parseFloat($(this).data('value'));
         });
 
         $(column + ' .sum .volume').text(volume.toLocaleString(
@@ -81,13 +81,13 @@ window.CorpCourierContracts = (function($) {
 
     function calcReward() {
 
-    	function getSystem(location) {
-    	    for (let i = 0; i < Route.graph.length; i++) {
-    	        if (location.indexOf(Route.graph[i].name) === 0) {
-    	            return Route.graph[i].name;
-    	        }
-    	    }
-    	}
+        function getSystem(location) {
+            for (let i = 0; i < Route.graph.length; i++) {
+                if (location.indexOf(Route.graph[i].name) === 0) {
+                    return Route.graph[i].name;
+                }
+            }
+        }
 
         function calculateRoute(startLoc, endLoc) {
             if (endLoc === 'Amarr') {
@@ -124,7 +124,7 @@ window.CorpCourierContracts = (function($) {
         //const cynoFee = 15000000; // per non-hub endpoint
         const distanceFee = 10000000; // per ly
 
-    	$('tbody .reward').each(function() {
+        $('tbody .reward').each(function() {
             const $start = $(this).closest('tr').find('.start');
             const $end = $(this).closest('tr').find('.end');
             const $volumeCell = $(this).closest('tr').find('.volume');
@@ -155,11 +155,11 @@ window.CorpCourierContracts = (function($) {
             const collateralShare = collateral / bltMaxCollateral;
 
             const calcReward = Math.round(baseFee + (
-    			(Math.ceil(Math.max(volumeShare, collateralShare, 0.01) * 1000) / 1000) *
-    			((distance * distanceFee) + (cynoFee * numJumps))
-			));
+                (Math.ceil(Math.max(volumeShare, collateralShare, 0.01) * 1000) / 1000) *
+                ((distance * distanceFee) + (cynoFee * numJumps))
+            ));
 
-        	$targetCell.data('value', calcReward);
+            $targetCell.data('value', calcReward);
             $targetCell.text(calcReward.toLocaleString('en-GB'));
             $targetCell.attr('title', title);
         });
@@ -222,11 +222,11 @@ window.CorpCourierContracts = (function($) {
         },
 
         select: function(ele) {
-        	let table;
+            let table;
             if ($(ele).closest('table').hasClass('outstanding')) {
-            	table = 'outstanding';
+                table = 'outstanding';
             } else {
-            	table = 'other';
+                table = 'other';
             }
 
             if ($(ele).hasClass('selected')) {
