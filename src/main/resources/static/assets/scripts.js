@@ -110,6 +110,8 @@ window.CorpCourierContracts = (function($) {
                 endLoc = 'EC-P8R';
             } else if (endLoc === 'Adacyne') {
                 endLoc = 'Maut';
+            } else if (endLoc === 'Keberz') {
+                endLoc = 'Nourbal';
             }
             const startSys = Route.findSystem(startLoc);
             const endSys = Route.findSystem(endLoc);
